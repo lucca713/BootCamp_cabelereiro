@@ -4,8 +4,10 @@ const express = require("express");
 const USerModel = require("../src/models/user.model");
 const UserModel = require("../src/models/user.model");
 
-
 const app = express();
+
+//sinalizar que o express vai receber um JSON
+app.use(express.json());
 
 app.get("/home", (req, res) => {
   res.contentType(".html");
@@ -33,8 +35,12 @@ const port = 8080;
 app.listen(port, () => console.log(`rodando com express na porta:  ${port}`));
 
 //usar os "USERS" como endpoint(final da url) para criacao de um usuario, o post para criar usuario
-app.post("/users", (req, res) => {
-  const user = UserModel.create(req.body)
+app.post("/users", async (req, res) => {
+  try {
+    const user = await UserModel.create(req.body);
 
-  res.status(201).json(user)
+    res.status(201).json(user);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 });
