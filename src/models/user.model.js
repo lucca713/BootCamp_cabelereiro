@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+//primeiro parametro é o nome do model (nesse caso User) e o outro o schema que esse User vai se referir
 const UserModel = mongoose.model("User", userSchema);
 
 module.exports = UserModel;
