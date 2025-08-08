@@ -10,7 +10,7 @@ const app = express();
 //sinalizar que o express vai receber um JSON
 app.use(express.json());
 
-//isso midle ele acontece antes de iniciar uma requisicao
+//isso midle ele acontece antes de iniciar uma requisicao (middleware)
 app.use((req, res, next) => {
   console.log(`Tipo da requisicao: ${req.method}`);
   console.log(`tipo do conteudo da requisicao: ${req.header["content-type"]}`);
