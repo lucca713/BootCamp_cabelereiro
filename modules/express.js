@@ -10,6 +10,13 @@ const app = express();
 //sinalizar que o express vai receber um JSON
 app.use(express.json());
 
+//isso midle ele acontece antes de iniciar uma requisicao
+app.use((req, res, next) => {
+  console.log(`Tipo da requisicao: ${req.method}`);
+  console.log(`tipo do conteudo da requisicao: ${req.header["content-type"]}`);
+  console.log(`horario da requisicao: ${new Date()}`);
+});
+
 app.get("/home", (req, res) => {
   res.contentType(".html");
   res.status(200).send("<h1> home page!! </h1>");
