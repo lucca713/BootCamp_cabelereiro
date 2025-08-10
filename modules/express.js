@@ -7,6 +7,12 @@ const express = require("express");
 const UserModel = require("../src/models/user.model");
 const app = express();
 
+//importando o ejs para usar os arquivos do banco em um HTML (funcionar como o asp)
+app.set("view engine", "ejs");
+
+//indicar onde o ejs vai pegar as views
+app.set("views", "src/views");
+
 //sinalizar que o express vai receber um JSON
 app.use(express.json());
 
@@ -15,6 +21,9 @@ app.use((req, res, next) => {
   console.log(`Tipo da requisicao: ${req.method}`);
   console.log(`tipo do conteudo da requisicao: ${req.header["content-type"]}`);
   console.log(`horario da requisicao: ${new Date()}`);
+
+  //para sair do middleware
+  next();
 });
 
 app.get("/home", (req, res) => {
@@ -92,4 +101,12 @@ app.post("/users", async (req, res) => {
   } catch (error) {
     res.status(500).send(error.message);
   }
+});
+
+app.get("/views/users", async (req, res) => {
+  //procurando todos os usuarios
+  const users = await UserModel.find({});
+
+  //falando que no index vamos ter acesso a todos os usuarios
+  res.render("index", { users });
 });
